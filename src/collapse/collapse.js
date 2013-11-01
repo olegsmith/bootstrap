@@ -9,12 +9,12 @@ angular.module('ui.bootstrap.collapse',['ui.bootstrap.transition'])
   // The fix is to remove the "collapse" CSS class while changing the height back to auto - phew!
   var fixUpHeight = function(scope, element, height) {
     // We remove the collapse CSS class to prevent a transition when we change to height: auto
-    element.removeClass('collapse');
+    element.removeClass('collapsing');
     element.css({ height: height });
     // It appears that  reading offsetWidth makes the browser realise that we have changed the
     // height already :-/
     var x = element[0].offsetWidth;
-    element.addClass('collapse');
+    element.addClass('collapsing');
   };
 
   return {
@@ -24,7 +24,7 @@ angular.module('ui.bootstrap.collapse',['ui.bootstrap.transition'])
       var initialAnimSkip = true;
       scope.$watch(function (){ return element[0].scrollHeight; }, function (value) {
         //The listener is called when scollHeight changes
-        //It actually does on 2 scenarios: 
+        //It actually does on 2 scenarios:
         // 1. Parent is set to display none
         // 2. angular bindings inside are resolved
         //When we have a change of scrollHeight we are setting again the correct height if the group is opened
@@ -38,7 +38,7 @@ angular.module('ui.bootstrap.collapse',['ui.bootstrap.transition'])
           }
         }
       });
-      
+
       scope.$watch(attrs.collapse, function(value) {
         if (value) {
           collapse();
@@ -46,7 +46,7 @@ angular.module('ui.bootstrap.collapse',['ui.bootstrap.transition'])
           expand();
         }
       });
-      
+
 
       var currentTransition;
       var doTransition = function(change) {
@@ -79,7 +79,7 @@ angular.module('ui.bootstrap.collapse',['ui.bootstrap.transition'])
         }
         isCollapsed = false;
       };
-      
+
       var collapse = function() {
         isCollapsed = true;
         if (initialAnimSkip) {
